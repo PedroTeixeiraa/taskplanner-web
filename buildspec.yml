@@ -11,8 +11,8 @@ phases:
 
 artifacts:
   files:
-    - '/out/**/*'
-    
+    - '**/*'
+
 cache:
   paths:
     - node_modules/
