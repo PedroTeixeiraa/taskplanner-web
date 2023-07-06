@@ -2,8 +2,6 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      nodejs: 14
     commands:
       - npm install
 
@@ -13,8 +11,8 @@ phases:
 
 artifacts:
   files:
-    - '**/*'
-
+    - '/out/**/*'
+    
 cache:
   paths:
     - node_modules/
