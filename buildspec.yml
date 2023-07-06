@@ -1,19 +1,12 @@
 version: 0.2
 
 phases:
-  install:
-    commands:
-      - npm install
-
   build:
     commands:
+      - npm install
       - npm run build
 
 artifacts:
+  base-directory: out
   files:
-    - '/out/**/*'
-  discard-paths: yes
-  
-cache:
-  paths:
-    - node_modules/
+    - '**/*'
