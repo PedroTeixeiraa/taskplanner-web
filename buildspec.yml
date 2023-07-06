@@ -10,9 +10,6 @@ phases:
   build:
     commands:
       - npm run export
-  post_build:
-    commands:
-      - aws s3 sync out/ s3://taskplanner.pedroalvescloud
 artifacts:
   files:
     - '**/*'
