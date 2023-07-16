@@ -193,7 +193,7 @@ export default function Home({ urlBase }) {
   );
 }
 
-export async function getServerSideProps() {
+async function getServerSideProps() {
   const urlBase = process.env.URL_BASE
 
   return {
