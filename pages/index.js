@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FaPlus, FaTrash, FaCheck } from 'react-icons/fa';
-import { useRequisicoes } from './use-requisicoes';
+import { useRequisicoes } from '../api/use-requisicoes';
 
 export default function Home({ urlBase }) {
   const [tasks, setTasks] = useState([]);
