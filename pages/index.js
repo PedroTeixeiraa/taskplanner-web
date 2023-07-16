@@ -1,29 +1,54 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaPlus, FaTrash, FaCheck } from 'react-icons/fa';
+import { useRequisicoes } from './use-requisicoes';
 
-export default function Home() {
+export default function Home({ urlBase }) {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
 
+  const { salvarTask, buscarTasks, atualizar, remover } = useRequisicoes(urlBase)
 
-  const handleAddTask = () => {
+  useEffect(() => {
+    const buscar = async () => {
+      const tasks = await buscarTasks()
+      setTasks(tasks)
+    }
+    buscar()
+  }, [])
+
+  const handleAddTask = async () => {
     if (newTask.trim() !== '') {
-      setTasks([...tasks, { text: newTask, completed: false }]);
-      setNewTask('');
+      const dados = {
+        nome: newTask,
+        concluida: 0,
+      }
+      await salvarTask(dados).then(() => {
+        setTasks([...tasks, { nome: newTask, concluida: false }]);
+        setNewTask('');
+      })
     }
   };
 
-  const handleRemoveTask = (index) => {
-    const updatedTasks = [...tasks];
-    updatedTasks.splice(index, 1);
-    setTasks(updatedTasks);
-  };
+  const handleRemoveTask = async (index, id) => {
+    await remover(id).then(() => {
+      const updatedTasks = [...tasks]
+      updatedTasks.splice(index, 1)
+      setTasks(updatedTasks)
+    })
+  }
 
-  const handleToggleTask = (index) => {
-    const updatedTasks = [...tasks];
-    updatedTasks[index].completed = !updatedTasks[index].completed;
-    setTasks(updatedTasks);
-  };
+  const handleToggleTask = async (index, task) => {
+    const updatedTasks = [...tasks]
+    const dados = {
+      nome: task.id,
+      concluida: !updatedTasks[index].concluida ? 1 : 0
+    }
+
+    await atualizar(dados, task.id).then(() => {
+      updatedTasks[index].concluida = !updatedTasks[index].concluida
+      setTasks(updatedTasks)
+    })
+  }
 
   return (
     <div className="container">
@@ -42,22 +67,22 @@ export default function Home() {
 
       <ul className="task-list">
         {tasks.map((task, index) => (
-          <li key={index} className={`task-item ${task.completed ? 'completed' : ''}`}>
+          <li key={index} className={`task-item ${task.concluida ? 'completed' : ''}`}>
             <span
               className="task-text"
             >
-              {task.text}
+              {task.nome}
             </span>
             <div className="task-actions">
               <button
                 className="action-button"
-                onClick={() => handleToggleTask(index)}
+                onClick={() => handleToggleTask(index, task)}
               >
-                {task.completed ? <FaCheck /> : <FaCheck className="hidden" />}
+                {task.concluida ? <FaCheck /> : <FaCheck className="hidden" />}
               </button>
               <button
                 className="action-button"
-                onClick={() => handleRemoveTask(index)}
+                onClick={() => handleRemoveTask(index, task.id)}
               >
                 <FaTrash />
               </button>
@@ -166,4 +191,14 @@ export default function Home() {
       `}</style>
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  const urlBase = process.env.URL_BASE
+
+  return {
+    props: {
+      urlBase
+    }
+  }
 }
