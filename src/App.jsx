@@ -80,12 +80,15 @@ export default function App() {
                 {task.nome}
               </span>
               <div className="task-actions">
-                <button
-                  className="action-button"
-                  onClick={() => handleToggleTask(index, task)}
-                >
-                  {task.concluida ? <FaCheck /> : <FaCheck className="hidden" />}
-                </button>
+                {!task.concluida ? (
+                  <button
+                    className="action-button"
+                    onClick={() => handleToggleTask(index, task)}
+                  >
+                    <FaCheck />
+                  </button>
+                ) : null}
+
                 <button
                   className="action-button"
                   onClick={() => handleRemoveTask(index, task.id)}
