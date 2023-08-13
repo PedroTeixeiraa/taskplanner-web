@@ -46,16 +46,15 @@ Siga estas etapas para executar o projeto TaskPlanner em sua máquina local:
 
     Abra o navegador e vá para http://localhost:3000.
 
-
-## Contribuição
-
-Contribuições são bem-vindas! Se você quiser colaborar com melhorias, correções de bugs ou adição de novos recursos, fique à vontade para abrir issues ou enviar pull requests.
-
 ## Tecnologias Utilizadas
 
 - **Next.js**: Framework React com foco em renderização do lado do servidor e construção de interfaces de usuário rápidas.
 - **React**: Biblioteca JavaScript para construção de interfaces de usuário interativas.
 - **CSS Modules**: Metodologia de estilização que permite o escopo local de estilos.
+
+## Contribuição
+
+Contribuições são bem-vindas! Se você quiser colaborar com melhorias, correções de bugs ou adição de novos recursos, fique à vontade para abrir issues ou enviar pull requests.
 
 ## Licença
 
